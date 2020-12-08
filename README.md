@@ -1,5 +1,28 @@
 # Food.com_Recipe_Popularity_Predictor
 
+
+<!--ts-->
+   * [Overview](#-overview-)
+   * [The Datasets](#-the-datasets-)
+   * [Inherent Challenges in Recipe Popularity Prediction](#-inherent-challenges-in-recipe-popularity-prediction-)
+      * [Data Imbalance](#-1--data-imbalance)
+      * [Data Leakage](#-2-data-leakage-)
+   * [The Model](#-the-model-)
+      * [Random Undersampling Boosted Classifier With Naive Bayes Estimators](#-i-random-undersampling-rus-boosted-classifier-with-naive-bayes-estimators)
+      * [Logistic Regression](#-ii-logistic-regression)
+   * [The Features](#-the-features-)
+      * [Current Age, Current Number of Ratings, Current Mean Rating, Number of Steps, Number of Ingredients, Cook Time, Number of Calories](#1-7--current-age-of-recipe-current-total-number-of-ratings-current-mean-rating-number-of-steps-number-of-ingredients-cook-time-number-of-calories)
+      * [Rating Pace](#8--rating-pace)
+      * [RUS-NB Classifier Probability Prediction](#9--rus-nb-classifier-probability-prediction)
+      * [Recipe Instructions Modified LIX Score](#10--recipe-instructions-readability-modified-lix-score)
+      * [Recipe Innovation IDF Score](#11--recipe-innovation-idf-score)
+      * [Recipe Innovation Jaccard and Average Innovation Jaccard](#12-and-13--recipe-innovation-jaccard-and-average-innovation-jaccard)
+   * [Evaluation Metrics](#-evaluation-metrics-)
+   * [Results](#-results-)
+   * [Post-Hoc Feature Analysis](#-post-hoc-feature-analysis-)
+   * [The Notebooks](#-the-notebooks-)
+<!--te-->
+
 <h3> Overview </h3>
 <p>
 The goal of this project is to predict which online recipes (from Food.com) will become popular over time.  Recipe popularity prediction seems to be a complex and difficult problem in machine-learning, which continues to inspire research for state-of-the-art methods.  I was particularly influenced in the design of this project by the article <a href="https://epjdatascience.springeropen.com/articles/10.1140/epjds/s13688-018-0149-5#Sec10">On the predictability of the popularity of online recipes</a> by Trattner, Moesslang, and Elsweiler appearing in EPJ Data Science (2018). 

@@ -136,32 +136,32 @@ t2 = March 30, 2018<br>
 
 The test set contains 228553 recipes.  The number of recipes which will achieve the popularity threshold by the target time is 123.  So our model attempts to predict an outcome achieved by 0.054% of recipes.
 
-When evaluated on the test set, the final model has average precision score 0.355, which I think is remarkably good given the difficulty of the prediction problem.  (For comparison, we would expect a totally random dummy predictor to achieve an average precision of .00054.)
+When evaluated on the test set, the final model has average precision score 0.354, which I think is remarkably good given the difficulty of the prediction problem.  (For comparison, we would expect a totally random dummy predictor to achieve an average precision of .00054.)
 
 The model also achieved an ROC_AUC of 0.999.  (This apparently high score is unremarkable given the data imbalance.)
 
-Of the 228553 recipes, with the model makes 67 positive predictions at its F1-optimized decision threshold.  Of these, 34 guesses are correct, for a recall score of 0.276 and a precision score of 0.507.
+Of the 228553 recipes, with the model makes 87 positive predictions at its F1-optimized decision threshold.  Of these, 39 guesses are correct, for a recall score of 0.317 and a precision score of 0.448.
 
-The model also returns probability estimates of crossing the popularity threshold for each recipe, so recipes can be ranked in descending order of likelihood.  Thus, Food.com may take the top 30 recipes returned by the popularity predictor and increase promotion for them, thus driving greater traffic and user engagement.  If this forecasting were conducted contemporaneously at the end of 2016, then more than half of these 30 would have crossed the threshold even without additional intervention, justifying the company's efforts.
+The model also returns probability estimates of crossing the popularity threshold for each recipe, so recipes can be ranked in descending order of likelihood.  Thus, Food.com may take the top 30 recipes returned by the popularity predictor and increase promotion for them, thus driving greater traffic and user engagement.  If this forecasting were conducted contemporaneously at the end of 2016, then half of these 30 would have crossed the threshold even without additional intervention, justifying the company's efforts.
 
 <h3> Post-Hoc Feature Analysis </h3>
 The logistic regressions step assigns feature weights to the (normalized) training data, which may be interpreted as a measure of feature importance.  Here is the full list of feature weights, with parameters set as above.
 
-total_ratings_curr	9.045011<br>
-age_in_days	-1.189304<br>
-rating_pace	0.284021<br>
-RUSNB_proba_pred	0.577928<br>
-mean_rating_curr	-0.989466<br>
-minutes	-0.000419<br>
-n_steps	0.603184<br>
-n_ingredients	0.343740<br>
-calories	0.002737<br>
-LIX_score	-0.351900<br>
-innovation_IDF	0.924896<br>
-innovation_jaccard	0.194669<br>
-innovation_jaccard_avg	0.917794<br>
+total_ratings_curr	9.510938<br>
+age_in_days	-1.376588<br>
+rating_pace	0.280316<br>
+RUSNB_proba_pred	0.537616<br>
+mean_rating_curr	-1.071987<br>
+minutes	-0.000327<br>
+n_steps	0.490753<br>
+n_ingredients	0.264547<br>
+calories	0.002297<br>
+LIX_score	-0.391925<br>
+innovation_IDF	0.782777<br>
+innovation_jaccard	0.189548<br>
+innovation_jaccard_avg	0.910835<br>
 
-Unsurprisingly, total_ratings_curr and age_in_days are the most predictive features.  It is interesting to note that innovation_IDF and innovation_jaccard_avg also have relatively high weights, providing evidence in favor of these as important metrics for recipe popularity potential.
+Unsurprisingly, total_ratings_curr and age_in_days are the most predictive features.  It is interesting to note that innovation_IDF and innovation_jaccard_avg also have relatively high weights, providing evidence in favor of these as important metrics for recipe popularity potential.  Conversely, calorie counts and recipe cook times appear to have little or no predictive value.
   
 <h3> The Notebooks </h3>
 <p>

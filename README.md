@@ -97,15 +97,15 @@ For recipes in the feature sets which are NOT considered candidate_recipes, we a
   
 <h3> Evaluation Metrics </h3>
 <p>
-We are trying to predict a rare event, so of course we care about precision and recall.  Our primary metric is Average Precision, because we want a model that makes good guesses especially at high thresholds, but is conservative and doesn't overguess too much.  Because Food.com's marketing team can't do much with a recommendation list that is thousands of recipes long.
+We are trying to predict a rare event, so of course we care about precision and recall.  What we would really like is a model that makes good reasonable guesses, which are often correct especially at high decision thresholds, but we want the model to be conservative and not overguess too much-- because Food.com's marketing team can't do much with a promotional recommendation list that is thousands of recipes long.  For this reason, our problem is best viewed as a type of information retrieval problem, where we want the first returned queries (the top recommended recipes) to have a strong proportion of true positives.  Thus our primary metric is <a href="https://en.wikipedia.org/wiki/Evaluation_measures_(information_retrieval)#Average_precision">Average Precision</a>.
 
-Since the logistic regression gives a natural probability estimate, we compute its optimal decision threshold as the one which maximizes the harmonic mean of its precision and recall on the training set.  Then, we take the precision and recall scores at this threshold on the test set.
+Since logistic regression gives a natural probability estimate, we also compute its optimal decision threshold as the one which maximizes the harmonic mean of its precision and recall on the training set.  Then, we also measure the precision and recall scores at this threshold on the test set.
 
 Area under the ROC curve is sometimes taken as a proxy for a balance between precision and recall, and so we include this metric in our testing.  However, a low False Positive Rate is not necessarily meaningful for this highly imbalanced dataset, so we consider ROC_AUC as a secondary metric only.
   
 <h3> Results </h3>
 <p>
-In our first experiment's run, we set the initial parameters at 
+This repository contains the results of an experiment run with the following initial parameters:
 
 T = 50<br>
 t1 = December 31, 2016<br>
@@ -113,9 +113,11 @@ t2 = March 30, 2018<br>
 
 The test set contains 228553 recipes.  The number of recipes which will achieve the popularity threshold by the target time is 123.  So our model attempts to predict an outcome achieved by 0.054% of recipes.
 
-When evaluated on the test set, the final model has average precision score 0.355, which I think is remarkably good given the difficulty of the prediction problem.  The model also achieved an ROC_AUC of 0.999.
+When evaluated on the test set, the final model has average precision score 0.355, which I think is remarkably good given the difficulty of the prediction problem.  (For comparison, we would expect a totally random dummy predictor to achieve an average precision of .00054.)
 
-Of the 228553 recipes, with the model makes 67 positive predictions.  Of these, 34 guesses are correct, for a recall score of 0.276 and a precision score of 0.507.
+The model also achieved an ROC_AUC of 0.999.  (This apparently high score is unremarkable given the data imbalance.)
+
+Of the 228553 recipes, with the model makes 67 positive predictions at its F1-optimized decision threshold.  Of these, 34 guesses are correct, for a recall score of 0.276 and a precision score of 0.507.
 
 The model also returns probability estimates of crossing the popularity threshold for each recipe, so recipes can be ranked in descending order of likelihood.  Thus, Food.com may take the top 30 recipes returned by the popularity predictor and increase promotion for them, thus driving greater traffic and user engagement.  If this forecasting were conducted contemporaneously at the end of 2016, then more than half of these 30 would have crossed the threshold even without additional intervention, justifying the company's efforts.
 
